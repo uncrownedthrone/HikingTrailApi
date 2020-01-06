@@ -7,7 +7,8 @@ namespace HikingTrailApi.Models
 {
   public partial class DatabaseContext : DbContext
   {
-
+    public DbSet<Trail> Trails { get; set; }
+    public DbSet<Park> Parks { get; set; }
     private string ConvertPostConnectionToConnectionString(string connection)
     {
       var _connection = connection.Replace("postgres://", String.Empty);
