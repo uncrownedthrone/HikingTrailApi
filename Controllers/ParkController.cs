@@ -24,7 +24,8 @@ namespace HikingTrailApi.Controllers
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Park>>> GetParks()
     {
-      return await db.Parks.ToListAsync();
+      return await db.Parks.OrderBy(o => o.Name).ToListAsync();
+      //   this orders parks by name
     }
 
     // GET: api/Park/5
