@@ -9,6 +9,30 @@ namespace HikingTrailApi.Controllers
   [Route("api/[controller]")]
   public class TrailController : ControllerBase
   {
+    [HttpGet]
+    public ActionResult GetAllTrails()
+    {
+      var db = new DatabaseContext();
+      return Ok(db.Trails.OrderBy(o => o.Name));
+    }
+    [HttpPost]
+    public ActionResult CreateTrail(NewTrail trail)
+    // the NewTrail uses the view model and convert it to a model
+    // and then adds it to the database
+    {
+      var tr = new Trail
+      {
+        Name = trail.Name,
+        ParkId = trail.ParkId,
+        Grade = trail.Grade,
+        Length = trail.Length
+      };
+      var db = new DatabaseContext();
+      db.Trails.Add(tr);
+      db.SaveChanges();
+      return Ok(tr);
+    }
+
     [HttpGet("{id}")]
     // on the server side, id talks to int id below
     // this is how we're getting the data
@@ -34,6 +58,5 @@ namespace HikingTrailApi.Controllers
         return Ok(trail);
       }
     }
-    [HttpPost]
   }
 }
